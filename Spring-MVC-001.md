@@ -1,8 +1,3 @@
-### Overviews:
-It's a personalized monorepo regarding Spring MVC, Qurakus, gRPC, GraalVM, JVM, etc using Java
-### Next
-=> https://www.baeldung.com/maven-wrapper
-
 ### Terms:
 `CDATA` => character data, is used for distinct, but related, purposes in the markup languages SGML and XML (also HTML). The term indicates that a certain portion of the document is general character data (for other purpose), rather than non-character data or character data with a more specific
 
@@ -11,6 +6,7 @@ It's a personalized monorepo regarding Spring MVC, Qurakus, gRPC, GraalVM, JVM, 
 `mvnw.cmd`: it's the windows os version of `mvnw`. 
 
 `.mvn`: the hidden folder that holds the Maven Wrapper Java library and its properties file
+
 ### javaX to Jakarta (Java EE to Jakarta EE):
 After Java EE was open sourced by Oracle and gave the rights to the Eclipse Foundation they were legally required to change the name from Java as Oracle has the rights over the Java brand. The name Jakarta was chosen by the community.
 
