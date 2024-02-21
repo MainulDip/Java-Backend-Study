@@ -1,2 +1,2 @@
 ### IntelliJ IDEA:
-Generate class methods based on declared properties.
+Generate class methods based on declared properties

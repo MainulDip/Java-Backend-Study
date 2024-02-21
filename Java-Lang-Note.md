@@ -52,5 +52,28 @@ class Test
 
 - Supplier FI => this does not take any input/argument but returns some output. there are BooleanSupplier, DoubleSupplier, LongSupplier, and IntSupplier. 
 
-
 Guide => https://www.geeksforgeeks.org/functional-interfaces-java/
+
+### Spring @Been:
+A bean is an object that is instantiated, assembled, and managed by a Spring IoC container (` IoC: Inversion of Control`). It's like seed in other terms, but rather than we creating, we supplied the requirements and Spring will do the rest of job, like creating the object/s in a specific point where everything is ready and manage it's lifecycle. 
+```java
+@Bean
+CommandLineRunner initDatabase(EmployeeRepository repository) {
+    return args -> {
+        log.info("Preloading " + repository.save(new Employee("Bilbo Baggins", "burglar")));
+        log.info("Preloading " + repository.save(new Employee("Frodo Baggins", "thief")));
+    };
+}
+```
+https://stackoverflow.com/questions/17193365/what-in-the-world-are-spring-beans
+
+### Inversion-of-Control (IoC) and Dependency Injection (DI):
+The Dependency-Injection (DI) pattern is a more specific version of IoC pattern.
+
+The term Inversion of Control (IoC) originally meant any sort of programming style where an overall framework or run-time controlled the program flow (lifecycle of everything inside).
+
+Inversion of Control (IoC) means that objects do not create other objects on which they rely to do their work. Instead, they get the objects that they need, from an outside source (for example, an xml configuration file or DI).
+
+Dependency Injection (DI) means that this is done without the object intervention, usually by a framework component that passes constructor parameters and set properties.
+
+https://stackoverflow.com/questions/6550700/inversion-of-control-vs-dependency-injection.

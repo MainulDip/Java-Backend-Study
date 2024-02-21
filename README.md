@@ -14,7 +14,7 @@ It's a personalized monorepo regarding Spring MVC, Qurakus, gRPC, GraalVM, JVM, 
 ### javaX to Jakarta (Java EE to Jakarta EE):
 After Java EE was open sourced by Oracle and gave the rights to the Eclipse Foundation they were legally required to change the name from Java as Oracle has the rights over the Java brand. The name Jakarta was chosen by the community.
 
-Spring Boot 3/Spring Framework 6 have upgraded to Jakarta EE 9+, hence the corresponding version of Spring Data JPA is now on the "jakarta" versions of things. Spring Boot 2.7 and earlier are still on "javax" versions of things.
+Spring Boot 3/Spring Framework 6 have upgraded to Jakarta EE 9+, hence the corresponding version of Spring Data JPA is now on the "jakarta" versions of things. Spring Boot 2.7 and earlier are still on "javax" versions of things
 
 
 `javax.persistence.*` becomes `jakarta.persistence`
