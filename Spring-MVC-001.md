@@ -43,3 +43,6 @@ Inversion of Control (IoC) means that objects do not create other objects on whi
 Dependency Injection (DI) means that this is done without the object intervention, usually by a framework component that passes constructor parameters and set properties
 
 https://stackoverflow.com/questions/6550700/inversion-of-control-vs-dependency-injection
+
+### @SpringBootApplication:
+It's a meta-annotation that pulls in `component scanning`, `autoconfiguration`, and `property support`. it will fire up a servlet container and serve up our service.
