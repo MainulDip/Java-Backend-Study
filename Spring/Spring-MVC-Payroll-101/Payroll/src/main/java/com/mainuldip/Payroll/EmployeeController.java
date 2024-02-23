@@ -31,3 +31,10 @@ public class EmployeeController {
                 .orElseThrow(() -> new EmployeeNotFoundException(id));
     }
 }
+
+
+class EmployeeNotFoundException extends  RuntimeException {
+    EmployeeNotFoundException(Long id) {
+        super("Could not find employee " + id);
+    }
+}

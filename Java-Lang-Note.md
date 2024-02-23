@@ -77,3 +77,25 @@ Inversion of Control (IoC) means that objects do not create other objects on whi
 Dependency Injection (DI) means that this is done without the object intervention, usually by a framework component that passes constructor parameters and set properties
 
 https://stackoverflow.com/questions/6550700/inversion-of-control-vs-dependency-injection.
+
+### Visibility Modifier For Class:
+Top level Class can have either `public` or implicit `package-private` (default, when there is no modifier mentioned) modifier. Inner or Nested class can use `private` and `protected` with the other two as well.
+
+Note: In a java file, there can be only one top level `public` class. Other top level class must be non-public, like implicit `package-private` (default if no modifier declared) 
+
+### Array, ArrayList vs List Interface:
+`Array` in Java is fixed length. An Array of String type is `String[]`. New array is created using `new String[n]` or shorthand `{}` notation.
+
+`List` is an Interface in Java, cannot instantiate directly, `ArrayList`, `LinkedList`, `Stack`, etc implements the List interface any those are not fixed size. It can be a type which can be populated using `Arrays.asList("a","b","c")`;
+
+`ArrayList` size is dynamic/not-fixed
+
+```java
+List<String> al1 = Arrays.asList("a","b","c");
+ArrayList<String> al2 = (ArrayList<String>) Arrays.asList("a","b","c"); // casting as ArrayList
+ArrayList<String> al3 = new ArrayList<String>(Arrays.asList("a","b","c"));
+ArrayList<String> al3a = new ArrayList<>(Arrays.asList("a","b","c"));
+ArrayList<String> al4 = new ArrayList<String>();
+al4.add("a"); // returns boolean
+boolean al4b = al4.add("b");
+```
