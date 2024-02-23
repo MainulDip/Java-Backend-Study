@@ -84,18 +84,98 @@ Top level Class can have either `public` or implicit `package-private` (default,
 Note: In a java file, there can be only one top level `public` class. Other top level class must be non-public, like implicit `package-private` (default if no modifier declared) 
 
 ### Array, ArrayList vs List Interface:
-`Array` in Java is fixed length. An Array of String type is `String[]`. New array is created using `new String[n]` or shorthand `{}` notation.
+`Array` in Java is fixed length. An Array of String type is `String[]`. New array is created using `new String[n]` or shorthand `{}` notation. can be multidimensional, length is used to read member count.
 
-`List` is an Interface in Java, cannot instantiate directly, `ArrayList`, `LinkedList`, `Stack`, etc implements the List interface any those are not fixed size. It can be a type which can be populated using `Arrays.asList("a","b","c")`;
+`List` is an Interface in Java, cannot instantiate directly. Immutable List can be created Using `Arrays.asList("a","b","c")`. size() is used to read member count.
 
-`ArrayList` size is dynamic/not-fixed
+`ArrayList`, `LinkedList`, `Stack`, etc implements the List interface and those are not fixed size. It can be a type which can be populated using `Arrays.asList("a","b","c")`;
+
+`ArrayList` size is dynamic/not-fixed, but interface List size if fixed.
+
+
+<img src="./images/Java-Collections-Framework-Hierarchy.png"/>
 
 ```java
-List<String> al1 = Arrays.asList("a","b","c");
-ArrayList<String> al2 = (ArrayList<String>) Arrays.asList("a","b","c"); // casting as ArrayList
-ArrayList<String> al3 = new ArrayList<String>(Arrays.asList("a","b","c"));
-ArrayList<String> al3a = new ArrayList<>(Arrays.asList("a","b","c"));
-ArrayList<String> al4 = new ArrayList<String>();
-al4.add("a"); // returns boolean
-boolean al4b = al4.add("b");
+List<String> al1 = Arrays.asList("a","b","c"); // adding or removing elements is not allowed
+// al1.add("d"); // not allowed, will throw UnsupportedOperationException (Runtime Exception)
+//  ArrayList<String> al2 = (ArrayList<String>) Arrays.asList("a","b","c"); // casting not possible
+
+List<String> al1a = new ArrayList<>();
+al1a.add("a");
+System.out.println(al1a.get(0)); // a
+ArrayList<String> al1b = (ArrayList<String>) al1a; // now casting is ok, but redundant. It can be auto/smart cast
+System.out.println(al1b.get(0)); // a
+
+ArrayList<String> al3 = new ArrayList<String>(Arrays.asList("a","b","c")); // explicit type is not required
+al3.add("d"); // ok
+
+ArrayList<String> al3a = new ArrayList<>(Arrays.asList("a","b","c")); // ok
+ArrayList<String> al4 = new ArrayList<>(List.of(new String[]{"a", "b"})); // ok
+al4.add("c"); // returns boolean
+boolean al4b = al4.add("d"); // ok
+
+String[] arr = {"a", "b"};
+ArrayList<String> al4c = new ArrayList<>(List.of(arr)); // ok
+
+List<String> al4d = new ArrayList<>(List.of(new String[]{"a", "b"})); // ok
+al4d.add("c"); // ok
+```
+
+### Arrays.asList vs ArrayList<>(Arrays.asList(array))
+Using Arrays.asList we can convert an array to a fixed-size List object. This List is just a wrapper that makes the array available as a list. No data is copied or created. Modification of the members of the new list will also modify original array.
+
+```java
+String[] stringArray = new String[] { "A", "B", "C", "D" };
+List stringList = Arrays.asList(stringArray);
+
+stringList.set(3, "E");
+ 
+assertThat(stringList).containsExactly("A", "B", "C", "E"); // true
+assertThat(stringArray).containsExactly("A", "B", "C", "E"); // true
+
+// stringList.add("F"); // not allowed
+```
+
+`ArrayList<>(Arrays.asList(array))` create a List out of an array, which is an independent copy of the array. So modifying the new list won’t affect the original array. Additionally, we have all the capabilities of a regular ArrayList, like adding and removing elements.
+
+```java
+String[] stringArray = new String[] { "A", "B", "C", "D" }; 
+List stringList = new ArrayList<>(Arrays.asList(stringArray));
+
+stringList.set(3, "E");
+ 
+assertThat(stringList).containsExactly("A", "B", "C", "E");
+assertThat(stringArray).containsExactly("A", "B", "C", "D");
+```
+
+### Optional in Java:
+```java
+import java.util.Optional;
+class JavaOptional {
+    public static void main(String[] args)
+    {
+
+        // creating a string array
+        String[] str = new String[5];
+
+        // Setting value for 2nd index
+        str[2] = "Testing Optionals in Java";
+
+        // It returns an empty instance of Optional class
+        Optional<String> empty = Optional.empty();
+        System.out.println(empty); // Optional.empty
+
+        // It returns a non-empty Optional
+        Optional<String> value = Optional.of(str[2]);
+        System.out.println(value); // Optional[Testing Optionals in Java]
+        System.out.println(value.get()); // Testing Optionals in Java
+        System.out.println(value.hashCode()); // 1119689728
+        System.out.println(value.isPresent());// true
+
+        Optional<String> emptyString = Optional.empty();
+        String opCheck1 = emptyString.isPresent() ? emptyString.get() : "Its still not initialized";
+        System.out.println(opCheck1); // Its still not initialized
+        String opCheck2 = emptyString.isPresent() ? emptyString.get() : emptyString.orElseThrow(()->new RuntimeException("emptyString throwing runtime exception"));
+    }
+}
 ```

@@ -1,39 +1,29 @@
 package com.mainuldip.Payroll;
-
-import io.micrometer.observation.Observation;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
-
 class JavaOptional {
     public static void main(String[] args)
     {
 
         // creating a string array
-        String[] str = {};
-        System.out.println(str.length);
-
-        List<String> al1 = Arrays.asList("a","b","c");
-        ArrayList<String> al2 = (ArrayList<String>) Arrays.asList("a","b","c"); // casting as ArrayList<String>
-        ArrayList<String> al3 = new ArrayList<String>(Arrays.asList("a","b","c"));
-        ArrayList<String> al3a = new ArrayList<>(Arrays.asList("a","b","c"));
-        ArrayList<String> al4 = new ArrayList<String>();
-        al4.add("a"); // returns boolean
-        boolean al4b = al4.add("b");
+        String[] str = new String[5];
 
         // Setting value for 2nd index
-        str[2] = "Geeks Classes are coming soon";
-
-        System.out.println(str.length);
+        str[2] = "Testing Optionals in Java";
 
         // It returns an empty instance of Optional class
         Optional<String> empty = Optional.empty();
-        System.out.println(empty);
+        System.out.println(empty); // Optional.empty
 
         // It returns a non-empty Optional
         Optional<String> value = Optional.of(str[2]);
-        System.out.println(value);
+        System.out.println(value); // Optional[Testing Optionals in Java]
+        System.out.println(value.get()); // Testing Optionals in Java
+        System.out.println(value.hashCode()); // 1119689728
+        System.out.println(value.isPresent());// true
+
+        Optional<String> emptyString = Optional.empty();
+        String opCheck1 = emptyString.isPresent() ? emptyString.get() : "Its still not initialized";
+        System.out.println(opCheck1); // Its still not initialized
+        String opCheck2 = emptyString.isPresent() ? emptyString.get() : emptyString.orElseThrow(()->new RuntimeException("emptyString throwing runtime exception"));
     }
 }
