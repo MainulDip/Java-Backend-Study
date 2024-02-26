@@ -21,10 +21,12 @@ public class EmployeeController {
     }
     // end::get-aggregate-root[]
 
+    // add a new employee
     @PostMapping("/employees")
     Employee newEmployee(@RequestBody Employee newEmployee) {
         return repository.save(newEmployee);
     }
+    // curl -X POST localhost:8080/employees -H 'Content-type:application/json' -d '{"name": "Samwise Gamgee", "role": "gardener"}'
 
     @GetMapping("/employees/{id}")
     Employee one(@PathVariable Long id) {
