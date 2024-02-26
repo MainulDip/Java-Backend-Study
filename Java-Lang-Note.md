@@ -43,7 +43,7 @@ class Test
 - Callable –> This interface only contains the call() method.
 
 
-### Java SE and four main kinds of functional interfaces
+### Java SE and four main kinds of functional interfaces:
 - Consumer FI => accepts only one argument or a gentrified argument has no return value (returns nothing). Bi-Consumer interface takes two arguments
 
 - Predicate FI => In scientific logic, a function that accepts an argument and, in return, generates a boolean value as an answer is known as a predicate. there are IntPredicate, DoublePredicate, and LongPredicate. Bi-Predicate is an extension of the Predicate functional interface which accepts two arguments, does some processing, and returns the boolean value.

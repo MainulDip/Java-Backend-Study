@@ -1,7 +1,7 @@
 ### IntelliJ IDEA
 Generate class methods based on declared properties
 
-### VS Code
+### VSCode
 => Spring Boot Extension Pack
     - Spring initializer
     -

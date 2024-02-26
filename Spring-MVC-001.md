@@ -44,5 +44,41 @@ Dependency Injection (DI) means that this is done without the object interventio
 
 https://stackoverflow.com/questions/6550700/inversion-of-control-vs-dependency-injection
 
-### @SpringBootApplication:
-It's a meta-annotation that pulls in `component scanning`, `autoconfiguration`, and `property support`. it will fire up a servlet container and serve up our service.
+### Spring Boot Architecture Brif and @SpringBootApplication:
+Spring boot use a lot of annotation and Dependency Injection behind the scene.
+
+`@SpringBootApplication` (Define app's starting point) a meta-annotation that pulls in `component scanning`, `autoconfiguration`, and `property support`. it will fire up a servlet container and serve up our REST service.
+
+### Spring Data JPA (DAO) | Hibernate (ORM) :
+Using Spring Data JPA, `DAOs` (Data Access Objects) are created automatically behind the scene at compile time. It uses an ORM (like Hibernate) in these DAOs. 
+
+To create DAO, we need a `POJO` with @Entity annotation (and some inner annotations) and a repository that extends `JpaRepository<POJO, IDType>`.
+
+```java
+@Entity
+public class Foo {
+  @Id
+  private Long id;
+  private String name;
+  //....
+}
+
+// FooRepository.java
+public interface FooRepository extends CrudRepository<Foo, Long> {
+  //that's it, nothing else. no code
+}
+```
+
+JPA (`Java Persistence API`) is a specification, Spring Data JPA is built on top of it. It's a higher-level framework that builds on top of `Hibernate` and provides a simpler, more streamlined API
+
+Base Custom Repository can also be defined and later extend into the final repository. In this case, base should be annotated with `@NoRepositoryBean`
+
+https://stackoverflow.com/questions/35150218/difference-between-spring-data-jpa-and-orm
+https://www.baeldung.com/the-persistence-layer-with-spring-data-jpa
+Guide: https://www.javaguides.net/p/spring-data-jpa-tutorial.html
+https://docs.spring.io/spring-data/jpa/reference/repositories/definition.html
+
+
+### @Autowired | :
+It allows Spring to resolve and inject collaborating beans into our bean.
+https://www.baeldung.com/spring-autowire
