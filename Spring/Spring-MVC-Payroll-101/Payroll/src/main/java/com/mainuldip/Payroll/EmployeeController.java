@@ -1,5 +1,4 @@
 package com.mainuldip.Payroll;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +19,7 @@ public class EmployeeController {
         return repository.findAll();
     }
     // end::get-aggregate-root[]
+    // curl -v localhost:8080/employees
 
     // add a new employee
     @PostMapping("/employees")
@@ -32,8 +32,9 @@ public class EmployeeController {
     Employee one(@PathVariable Long id) {
         return repository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
     }
+    // curl -v localhost:8080/employees/99
 
-    @PutMapping("/employee/{id}")
+    @PutMapping("/employees/{id}")
     Employee replaceEmployee(@RequestBody  Employee newEmployee,@PathVariable Long id) {
         return repository.findById(id).map(employee -> {
             employee.setName(newEmployee.getName());
@@ -44,12 +45,14 @@ public class EmployeeController {
             return repository.save(newEmployee);
         });
     }
+    // curl -X PUT localhost:8080/employees/3 -H 'Content-type:application/json' -d '{"name": "Samwise Gamgee", "role": "ring bearer"}'
 
     // Delete Employee
-    @DeleteMapping("/employee/{id}")
+    @DeleteMapping("/employees/{id}")
     void deleteEmploy(@PathVariable Long id) {
         repository.deleteById(id);
     }
+    // curl -X DELETE localhost:8080/employees/4
 }
 
 
@@ -59,12 +62,13 @@ class EmployeeNotFoundException extends RuntimeException {
     }
 }
 
+// this will actually connect the custom exception handler (EmployeeNotFoundException) with the Spring REST Controller Application
 @ControllerAdvice
 class EmployeeNotFoundAdvice {
     @ResponseBody
     @ExceptionHandler(EmployeeNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     String employeeNotFoundHandler(EmployeeNotFoundException ex) {
-        return ex.getMessage();
+        return ex.getMessage() + " Done!! \n\n\n";
     }
 }
