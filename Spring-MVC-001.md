@@ -49,8 +49,21 @@ Spring boot use a lot of annotation and Dependency Injection behind the scene.
 
 `@SpringBootApplication` (Define app's starting point) a meta-annotation that pulls in `component scanning`, `autoconfiguration`, and `property support`. it will fire up a servlet container and serve up our REST service.
 
+```java
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class PayrollApplication {
+	public static void main(String[] args) {
+		System.out.print("Bismillah");
+		SpringApplication.run(PayrollApplication.class, args);
+	}
+}
+```
+
 ### Spring Data JPA (DAO) | Hibernate (ORM) :
-Using Spring Data JPA, `DAOs` (Data Access Objects) are created automatically behind the scene at compile time. It uses an ORM (like Hibernate) in these DAOs. 
+Using Spring Data JPA (Java Persistance API), `DAOs` (Data Access Objects) are created automatically behind the scene at compile time. It uses an ORM (like Hibernate) in these DAOs. 
 
 To create DAO, we need a `POJO` with @Entity annotation (and some inner annotations) and a repository that extends `JpaRepository<POJO, IDType>`.
 
@@ -69,18 +82,34 @@ public interface FooRepository extends CrudRepository<Foo, Long> {
 }
 ```
 
-JPA (`Java Persistence API`) is a specification, Spring Data JPA is built on top of it. It's a higher-level framework that builds on top of `Hibernate` and provides a simpler, more streamlined API
+JPA (`Java Persistence API`) is a specification, Spring Data JPA is built on top of it. It's a higher-level framework that builds on top of `Hibernate` ORM and provides a simpler, more streamlined API
 
-Base Custom Repository can also be defined and later extend into the final repository. In this case, base should be annotated with `@NoRepositoryBean`
+Base Custom Repository can also be defined and later extend into the final repository. In this case, base should be annotated with `@NoRepositoryBean`.
+
+Spring Data JPA will automatically look for a database driver to connect with a DB.
 
 https://stackoverflow.com/questions/35150218/difference-between-spring-data-jpa-and-orm
 https://www.baeldung.com/the-persistence-layer-with-spring-data-jpa
 Guide: https://www.javaguides.net/p/spring-data-jpa-tutorial.html
 https://docs.spring.io/spring-data/jpa/reference/repositories/definition.html
 
-### REST Controller Sample:
+### JPA, Database Connections (h2,mysql,postgres,etc) and application.properties entry:
+JAP will by default look for a database connection driver or an in-memory database in the artifacts/dependencies. H2 is an in-memory database, which can be used for fast prototyping and later can be migrated into MySQL or PostgreSQL. Spring boot initializer lists all the available db drivers, like `MySQL Driver`, `PostgreSQL Driver`
+
+To configure jpa with full featured database like mysql or postgres, `application.properties` or `application.yml` file is used to store database configs.
+
+```txt
+spring.datasource.url=jdbc:mysql://localhost:3306/myDb
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+spring.datasource.username=root
+spring.datasource.password=root
+server.port=7000
+```
+
+### REST Controller Sample (RPC):
 ```java
-package com.mainuldip.Payroll;
+package com.mainuldip.payroll;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -161,3 +190,39 @@ class EmployeeNotFoundAdvice {
 ### @Autowired:
 It allows Spring to resolve and inject collaborating beans into our bean.
 https://www.baeldung.com/spring-autowire
+
+
+### RESTful vs RPC:
+REST stands for `Representational State Transfer` and RPC for `Remote procedural call`. Calling an API end point and getting back response are considered `RPC`. When RPC includes `Representation` of the overall API as link (Link to other resources), it become a `RESTful` service. 
+
+Roy T. Fielding first coined the term REST in 2000, in his PhD dissertation Architectural Styles and the Design of Network-based Software Architectures. 
+
+* Example: A RESTful response form a server that includes link to self and all employee collection
+
+```json
+{
+  "id": 1,
+  "name": "Bilbo Baggins",
+  "role": "burglar",
+  "_links": {
+    "self": {
+      "href": "http://localhost:8080/employees/1"
+    },
+    "employees": {
+      "href": "http://localhost:8080/employees"
+    }
+  }
+}
+```
+
+### JPA vs JDBC:
+Spring JDBC allows to write SQL queries explicitly, giving the complete control over the database interactions. But adds a lot of boilerplate code. JDBC is database-dependent, which means that different scripts must be written for different databases.
+
+Spring JPA acts as abstraction layer on top of Hibernate and JDBC based on the JPA specification (java persistance api specification). Spring provide pre-configured database query on repository. So most of the boilerplate codes are hidden. JPA is database-agnostic, meaning that the same code can be used in a variety of databases with few (or no) modifications.
+
+Spring JPA provides `CrudRepository` for simple CRUD operations and provide built-in methods to hook into controllers.
+
+* JPA-based applications still use JDBC under the hood. JPA serves as a layer of abstraction that hides the low-level JDBC calls from the developer, making database programming considerably easier.
+
+### Port Configs:
+https://www.baeldung.com/spring-boot-change-port
