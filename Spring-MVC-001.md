@@ -216,7 +216,7 @@ Roy T. Fielding first coined the term REST in 2000, in his PhD dissertation Arch
 ```
 
 ### JPA vs JDBC:
-Spring JDBC allows to write SQL queries explicitly, giving the complete control over the database interactions. But adds a lot of boilerplate code. JDBC is database-dependent, which means that different scripts must be written for different databases.
+Spring JDBC allows to write SQL queries explicitly, giving the complete control over the database interactions. But adds a lot of boilerplate code. JDBC is database-dependent, which means that different scripts must be written for different databases
 
 Spring JPA acts as abstraction layer on top of Hibernate and JDBC based on the JPA specification (java persistance api specification). Spring provide pre-configured database query on repository. So most of the boilerplate codes are hidden. JPA is database-agnostic, meaning that the same code can be used in a variety of databases with few (or no) modifications.
 
