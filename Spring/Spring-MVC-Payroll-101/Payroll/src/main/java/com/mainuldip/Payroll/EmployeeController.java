@@ -1,8 +1,7 @@
 package com.mainuldip.Payroll;
 import org.springframework.http.HttpStatus;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
-
-import jakarta.annotation.Nullable;
 
 import java.util.List;
 
@@ -34,15 +33,14 @@ public class EmployeeController {
     }
     // curl -X POST localhost:8080/employees -H 'Content-type:application/json' -d '{"name": "Samwise Gamgee", "role": "gardener"}'
 
-    @SuppressWarnings("null")
     @GetMapping("/employees/{id}")
-    Employee one(@PathVariable Long id) {
+    Employee one(@PathVariable @NonNull Long id) {
         return repository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
     }
     // curl -v localhost:8080/employees/99
 
     @PutMapping("/employees/{id}")
-    Employee replaceEmployee(@RequestBody  Employee newEmployee, @PathVariable Long id) {
+    Employee replaceEmployee(@RequestBody  Employee newEmployee, @PathVariable @NonNull Long id) throws Exception {
         return repository.findById(id).map(employee -> {
             employee.setName(newEmployee.getName());
             employee.setRole(newEmployee.getRole());
