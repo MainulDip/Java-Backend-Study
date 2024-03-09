@@ -24,6 +24,7 @@ class JavaOptional {
         Optional<String> emptyString = Optional.empty();
         String opCheck1 = emptyString.isPresent() ? emptyString.get() : "Its still not initialized";
         System.out.println(opCheck1); // Its still not initialized
+        @SuppressWarnings("unused")
         String opCheck2 = emptyString.isPresent() ? emptyString.get() : emptyString.orElseThrow(()->new RuntimeException("emptyString throwing runtime exception"));
     }
 }

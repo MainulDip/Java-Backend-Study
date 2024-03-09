@@ -2,6 +2,8 @@ package com.mainuldip.Payroll;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.annotation.Nullable;
+
 import java.util.List;
 
 @RestController
@@ -23,11 +25,16 @@ public class EmployeeController {
 
     // add a new employee
     @PostMapping("/employees")
-    Employee newEmployee(@RequestBody Employee newEmployee) {
-        return repository.save(newEmployee);
+    boolean newEmployee(@RequestBody Employee newEmployee) {
+        if (newEmployee != null) {
+            repository.save(newEmployee);
+            return true;
+        }
+        return false;
     }
     // curl -X POST localhost:8080/employees -H 'Content-type:application/json' -d '{"name": "Samwise Gamgee", "role": "gardener"}'
 
+    @SuppressWarnings("null")
     @GetMapping("/employees/{id}")
     Employee one(@PathVariable Long id) {
         return repository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
@@ -35,7 +42,7 @@ public class EmployeeController {
     // curl -v localhost:8080/employees/99
 
     @PutMapping("/employees/{id}")
-    Employee replaceEmployee(@RequestBody  Employee newEmployee,@PathVariable Long id) {
+    Employee replaceEmployee(@RequestBody  Employee newEmployee, @PathVariable Long id) {
         return repository.findById(id).map(employee -> {
             employee.setName(newEmployee.getName());
             employee.setRole(newEmployee.getRole());
@@ -50,7 +57,7 @@ public class EmployeeController {
     // Delete Employee
     @DeleteMapping("/employees/{id}")
     void deleteEmploy(@PathVariable Long id) {
-        repository.deleteById(id);
+        if (id != null) repository.deleteById(id);
     }
     // curl -X DELETE localhost:8080/employees/4
 }
