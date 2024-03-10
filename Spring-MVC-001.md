@@ -192,8 +192,8 @@ It allows Spring to resolve and inject collaborating beans into our bean.
 https://www.baeldung.com/spring-autowire
 
 
-### RESTful vs RPC:
-REST stands for `Representational State Transfer` and RPC for `Remote procedural call`. Calling an API end point and getting back response are considered `RPC`. When RPC includes `Representation` of the overall API as link (Link to other resources), it become a `RESTful` service. 
+### RESTful vs RPC and Spring HATEOAS:
+REST stands for `Representational State Transfer` and RPC for `Remote procedural call`. Calling an API end point and getting back response are considered `RPC`. When RPC includes `Representation` of the overall API as link (Link to other resources), it become a `RESTful` service. In other words, a RESTful API will always provide a way to further interact with the service (through link/hypertext to other resources).
 
 Roy T. Fielding first coined the term REST in 2000, in his PhD dissertation Architectural Styles and the Design of Network-based Software Architectures. 
 
@@ -215,6 +215,43 @@ Roy T. Fielding first coined the term REST in 2000, in his PhD dissertation Arch
 }
 ```
 
+
+* Spring HATEOAS is a helper module to write hypermedia-driven API or RESTful API. Controller method and response docked
+
+```java
+@GetMapping("/employees")
+List<Employee> all() {
+    return repository.findAll();
+}
+// curl -v localhost:8080/employees
+
+// EntityModel<T> is form Hateoas, linkTo and methodOn are form hateoas' utility WebMvcLinkBuilder package
+@GetMapping("/employees/{id}")
+EntityModel<Employee> one(@PathVariable @NonNull Long id) {
+    Employee employee = repository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+    return EntityModel.of(employee, 
+    linkTo(methodOn(EmployeeController.class).one(id)).withSelfRel(),
+    linkTo(methodOn(EmployeeController.class).all()).withRel("employees")
+    );
+}
+// curl -v localhost:8080/employees/1 | json_pp
+/* response
+{
+  "id": 1,
+  "name": "Bilbo Baggins",
+  "role": "burglar",
+  "_links": {
+    "self": {
+      "href": "http://localhost:8080/employees/1"
+    },
+    "employees": {
+      "href": "http://localhost:8080/employees"
+    }
+  }
+}
+*/
+```
+
 ### JPA vs JDBC:
 Spring JDBC allows to write SQL queries explicitly, giving the complete control over the database interactions. But adds a lot of boilerplate code. JDBC is database-dependent, which means that different scripts must be written for different databases
 
@@ -224,5 +261,5 @@ Spring JPA provides `CrudRepository` for simple CRUD operations and provide buil
 
 * JPA-based applications still use JDBC under the hood. JPA serves as a layer of abstraction that hides the low-level JDBC calls from the developer, making database programming considerably easier.
 
-### Port Configs:
+### Port Configs
 https://www.baeldung.com/spring-boot-change-port

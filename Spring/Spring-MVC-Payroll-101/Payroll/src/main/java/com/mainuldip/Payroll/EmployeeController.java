@@ -1,9 +1,13 @@
 package com.mainuldip.Payroll;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 public class EmployeeController {
@@ -34,8 +38,12 @@ public class EmployeeController {
     // curl -X POST localhost:8080/employees -H 'Content-type:application/json' -d '{"name": "Samwise Gamgee", "role": "gardener"}'
 
     @GetMapping("/employees/{id}")
-    Employee one(@PathVariable @NonNull Long id) {
-        return repository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+    EntityModel<Employee> one(@PathVariable @NonNull Long id) {
+        Employee employee = repository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+        return EntityModel.of(employee, 
+        linkTo(methodOn(EmployeeController.class).one(id)).withSelfRel(),
+        linkTo(methodOn(EmployeeController.class).all()).withRel("employees")
+        );
     }
     // curl -v localhost:8080/employees/99
 
