@@ -24,7 +24,7 @@ public class EmployeeController {
         return repository.findAll();
     }
     // end::get-aggregate-root[]
-    // curl -v localhost:8080/employees
+    // curl -v localhost:8080/employees | json_pp
 
     // add a new employee
     @PostMapping("/employees")

@@ -4,7 +4,7 @@ Let's work with free version of Intellij IDEA (community edition). As Idea commu
 ### IntelliJ IDEA
 Generate class methods based on declared properties.
 
-### VSCode
+### VSCode:
 To work in vs-code for spring boot development, we need
 => Spring Boot Extension Pack (contains below extensions and some other helper extensions)
     - Spring initializer

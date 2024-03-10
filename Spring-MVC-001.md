@@ -44,7 +44,7 @@ Dependency Injection (DI) means that this is done without the object interventio
 
 https://stackoverflow.com/questions/6550700/inversion-of-control-vs-dependency-injection
 
-### Spring Boot Architecture Brif and @SpringBootApplication:
+### Spring Boot Architecture Brif and @SpringBootApplication
 Spring boot use a lot of annotation and Dependency Injection behind the scene.
 
 `@SpringBootApplication` (Define app's starting point) a meta-annotation that pulls in `component scanning`, `autoconfiguration`, and `property support`. it will fire up a servlet container and serve up our REST service.
@@ -219,21 +219,35 @@ Roy T. Fielding first coined the term REST in 2000, in his PhD dissertation Arch
 * Spring HATEOAS is a helper module to write hypermedia-driven API or RESTful API. Controller method and response docked
 
 ```java
-@GetMapping("/employees")
-List<Employee> all() {
-    return repository.findAll();
-}
-// curl -v localhost:8080/employees
+import org.springframework.hateoas.EntityModel;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-// EntityModel<T> is form Hateoas, linkTo and methodOn are form hateoas' utility WebMvcLinkBuilder package
-@GetMapping("/employees/{id}")
-EntityModel<Employee> one(@PathVariable @NonNull Long id) {
-    Employee employee = repository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
-    return EntityModel.of(employee, 
-    linkTo(methodOn(EmployeeController.class).one(id)).withSelfRel(),
-    linkTo(methodOn(EmployeeController.class).all()).withRel("employees")
-    );
+@RestController
+public class EmployeeController {
+    private final EmployeeRepository repository;
+
+    public EmployeeController(EmployeeRepository repository) {
+        this.repository = repository;
+    }
+
+    @GetMapping("/employees")
+    List<Employee> all() {
+      return repository.findAll();
+    }
+    // curl -v localhost:8080/employees
+
+    // EntityModel<T> is form Hateoas, linkTo and methodOn are form hateoas' utility WebMvcLinkBuilder package
+    @GetMapping("/employees/{id}")
+    EntityModel<Employee> one(@PathVariable @NonNull Long id) {
+        Employee employee = repository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+        return EntityModel.of(employee, 
+        linkTo(methodOn(EmployeeController.class).one(id)).withSelfRel(),
+        linkTo(methodOn(EmployeeController.class).all()).withRel("employees")
+        );
+    }
 }
+
 // curl -v localhost:8080/employees/1 | json_pp
 /* response
 {
