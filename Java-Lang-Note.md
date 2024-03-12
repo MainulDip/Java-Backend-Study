@@ -34,8 +34,31 @@ class Test
 	}
 }
 ```
+
+
+### Built in Function Interface | `Function<T,R>`:
+It has been introduced in Java 8, to implement functional programming in Java. It represents a function which takes `T` argument type and produces `R` result type. 
+
+The Function interface consists of the following 4 methods
+- apply()
+- andThen()
+- compose()
+- identity()
+
+```java
+public static void main(String args[])
+{
+    // java's built in functional interface. 
+    // It will receive Integer as argument and will return Double
+    Function<Integer, Double> half = a -> a / 2.0;
+
+    // Applying the function to get the result
+    System.out.println(half.apply(10));
+}
+```
+
 ### @FunctionalInterface Annotation and Built-in FI:
-@FunctionalInterface annotation is used to ensure that the functional interface can’t have more than one abstract method. In case more than one abstract methods are present, the compiler flags an ‘Unexpected @FunctionalInterface annotation’ message. However, it is not mandatory to use this annotation.
+@FunctionalInterface annotation is used to ensure that the functional interface can’t have more than one abstract method. In case more than one abstract methods are present, the compiler flags an ‘Unexpected @FunctionalInterface annotation’ message. However, it is not mandatory to use this annotation
 
 - Runnable –> This interface only contains the run() method.
 - Comparable –> This interface only contains the compareTo() method.
@@ -177,5 +200,26 @@ class JavaOptional {
         System.out.println(opCheck1); // Its still not initialized
         String opCheck2 = emptyString.isPresent() ? emptyString.get() : emptyString.orElseThrow(()->new RuntimeException("emptyString throwing runtime exception"));
     }
+}
+```
+
+### Built in Function Interface | `Function<T,R>`:
+It has been introduced in Java 8, to implement functional programming in Java. It represents a function which takes `T` argument type and produces `R` result type. 
+
+The Function interface consists of the following 4 methods
+- apply()
+- andThen()
+- compose()
+- identity()
+
+```java
+public static void main(String args[])
+{
+    // java's built in functional interface. 
+    // It will receive Integer as argument and will return Double
+    Function<Integer, Double> half = a -> a / 2.0;
+
+    // Applying the function to get the result
+    System.out.println(half.apply(10));
 }
 ```

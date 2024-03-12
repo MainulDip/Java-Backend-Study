@@ -1,4 +1,6 @@
 package com.mainuldip.Payroll;
+
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
@@ -20,8 +22,12 @@ public class EmployeeController {
     // Aggregate root
     // tag::get-aggregate-root[]
     @GetMapping("/employees")
-    List<Employee> all() {
-        return repository.findAll();
+    CollectionModel<EntityModel<Employee>> all() {
+        List<EntityModel<Employee>> employee = repository.findAll().stream().map(
+                employee1 -> EntityModel.of()
+        );
+        return null;
+//        return repository.findAll();
     }
     // end::get-aggregate-root[]
     // curl -v localhost:8080/employees | json_pp
@@ -40,15 +46,15 @@ public class EmployeeController {
     @GetMapping("/employees/{id}")
     EntityModel<Employee> one(@PathVariable @NonNull Long id) {
         Employee employee = repository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
-        return EntityModel.of(employee, 
-        linkTo(methodOn(EmployeeController.class).one(id)).withSelfRel(),
-        linkTo(methodOn(EmployeeController.class).all()).withRel("employees")
+        return EntityModel.of(employee,
+                linkTo(methodOn(EmployeeController.class).one(id)).withSelfRel(),
+                linkTo(methodOn(EmployeeController.class).all()).withRel("employees")
         );
     }
     // curl -v localhost:8080/employees/99
 
     @PutMapping("/employees/{id}")
-    Employee replaceEmployee(@RequestBody  Employee newEmployee, @PathVariable @NonNull Long id) throws Exception {
+    Employee replaceEmployee(@RequestBody Employee newEmployee, @PathVariable @NonNull Long id) throws Exception {
         return repository.findById(id).map(employee -> {
             employee.setName(newEmployee.getName());
             employee.setRole(newEmployee.getRole());
