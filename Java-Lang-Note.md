@@ -67,7 +67,7 @@ CommandLineRunner initDatabase(EmployeeRepository repository) {
 ```
 https://stackoverflow.com/questions/17193365/what-in-the-world-are-spring-beans
 
-### Inversion-of-Control (IoC) and Dependency Injection (DI):
+### Inversion-of-Control (IoC) and Dependency Injection (DI)
 The Dependency-Injection (DI) pattern is a more specific version of IoC pattern
 
 The term Inversion of Control (IoC) originally meant any sort of programming style where an overall framework or run-time controlled the program flow (lifecycle of everything inside).

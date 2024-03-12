@@ -266,6 +266,11 @@ public class EmployeeController {
 */
 ```
 
+### `Hateoas`, `WebMvcLinkBuilder` and `RepresentationModelAssembler`:
+WebMvcLinkBuilder is for working with SpringMVC. It contains `linkTo`, `methodOn` helper static methods.
+
+`RepresentationModelAssembler<T,EntityModel<T>>` interface is to convert  
+
 ### JPA vs JDBC:
 Spring JDBC allows to write SQL queries explicitly, giving the complete control over the database interactions. But adds a lot of boilerplate code. JDBC is database-dependent, which means that different scripts must be written for different databases
 

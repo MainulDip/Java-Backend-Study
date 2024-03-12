@@ -18,4 +18,4 @@ To work in vs-code for spring boot development, we need
 Docs => https://code.visualstudio.com/docs/java/java-spring-boot
 
 
-### Spring ResponseEntity<?>:
+### Spring ResponseEntity<?>
