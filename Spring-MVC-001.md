@@ -276,7 +276,7 @@ Spring JDBC allows to write SQL queries explicitly, giving the complete control 
 
 Spring JPA acts as abstraction layer on top of Hibernate and JDBC based on the JPA specification (java persistance api specification). Spring provide pre-configured database query on repository. So most of the boilerplate codes are hidden. JPA is database-agnostic, meaning that the same code can be used in a variety of databases with few (or no) modifications.
 
-Spring JPA provides `CrudRepository` for simple CRUD operations and provide built-in methods to hook into controllers.
+Spring JPA provides `CrudRepository` for simple CRUD operations and provide built-in methods to hook into controllers
 
 * JPA-based applications still use JDBC under the hood. JPA serves as a layer of abstraction that hides the low-level JDBC calls from the developer, making database programming considerably easier.
 

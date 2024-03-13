@@ -255,3 +255,20 @@ applyInverse(3, n -> n * n + 7);
 ```
 
 ### Method reference in java:
+When a function/method accepts another function or lambda, a method reference can be injected if both parameter type is same.
+
+```java
+Stream<Number> numberStream = Stream.of(1,2L);
+Function<Number, Integer> function = n -> Integer.valueOf(n.intValue());
+Stream<Integer> numberStream1 = numberStream.map(function);
+// map accept `fun` signature as Integer is a subtype of Number, aka Integer extends Number
+// as map will accept `Function<? super T, ? extends R>` where T is the stream type and R is the accepted return type
+numberStream1.forEach(System.out::println);
+```
+
+https://www.baeldung.com/java-method-references
+
+### Covariant/Output-type and Contravariant/Input-type  (`<? extends R>, <? super T>`):
+As-for-example Stream's map accept `Function<? super T, ? extends R>` functional type where T is a contravariant which is used for input-type and R is the return/output-type, which is a covariant.
+
+* invariant means, exact type (aka, neither covariant nor contravariant)
