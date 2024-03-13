@@ -171,7 +171,7 @@ assertThat(stringList).containsExactly("A", "B", "C", "E");
 assertThat(stringArray).containsExactly("A", "B", "C", "D");
 ```
 
-### Optional in Java:
+### Optional in Java
 ```java
 import java.util.Optional;
 class JavaOptional {
@@ -223,3 +223,35 @@ public static void main(String args[])
     System.out.println(half.apply(10));
 }
 ```
+
+### Stream and map | Function<? super T, ? extends R>:
+
+map accepts a function whose signature is `Function<? super T, ? extends R>` to allow functions accept `T (Stream's Type) or super type of T` and return `R or a subtype of R`
+```java
+Stream<Number> numberStream = Stream.of(1,2L);
+Function<Number, Integer> function = n -> Integer.valueOf(n.intValue());
+Stream<Integer> numberStream1 = numberStream.map(function);
+// map accept `fun` signature as Integer is a subtype of Number, aka Integer extends Number
+// as map will accept `Function<? super T, ? extends R>` where T is the stream type and R is the accepted return type
+numberStream1.forEach(System.out::println);
+```
+
+### `default` method in Interface:
+Inside interfaces, `Default` methods are those methods which have some default implementation and helps in evolving the interfaces without breaking the existing code.
+
+```java
+interface Operator {
+    int operate(int n);
+    default int inverse(int n) {
+        return -operate(n);
+    }
+}
+
+public int applyInverse(int n, Operator operator) {
+    return operator.inverse(n);
+}
+
+applyInverse(3, n -> n * n + 7);
+```
+
+### Method reference in java:
