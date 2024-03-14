@@ -224,7 +224,90 @@ public static void main(String args[])
 }
 ```
 
-### Stream and map | Function<? super T, ? extends R>:
+### Stream vs Collection/List:
+Stream API is a way to express and process collections, like filtering, mapping,reducing and sorting. 
+
+A stream is not a data structure that stores elements, instead, it conveys elements from a source such as a data structure, an array/list, generator function, or an I/O channel, through a pipeline of computational operations.
+
+All those classes coming from `Collection interface`, like List/ArrayList are data structures that stores objects of different types.
+
+`Functional` in nature. An operation on a stream produces a result, but does not modify its source. For example, filtering a Stream obtained from a collection produces a new Stream without the filtered elements, rather than removing elements from the source collection.
+
+```java
+public static void main(String args[])
+{
+    // create a list of integers
+    List<Integer> number = Arrays.asList(2, 3, 4, 5); 
+
+    // demonstration of map method
+    List<Integer> square 
+        = number.stream()
+        .map(x -> x * x)
+        .collect(Collectors.toList());
+
+    // create a list of String
+    List<String> names = Arrays.asList(
+        "Reflection", "Collection", "Stream");
+
+    // demonstration of filter method
+    List<String> result
+        = names.stream()
+        .filter(s -> s.startsWith("S"))
+        .collect(Collectors.toList());
+    
+    System.out.println(result);
+
+    // demonstration of sorted method
+    List<String> show 
+        = names.stream()
+        .sorted()
+        .collect(Collectors.toList());
+    
+    System.out.println(show);
+
+    // create a list of integers
+    List<Integer> numbers
+        = Arrays.asList(2, 3, 4, 5, 2);
+
+    // collect method returns a set
+    Set<Integer> squareSet
+        = numbers.stream()
+        .map(x -> x * x)
+        .collect(Collectors.toSet());
+    
+    System.out.println(squareSet);
+
+    // demonstration of forEach method
+    number.stream()
+        .map(x -> x * x)
+        .forEach(y -> System.out.println(y));
+
+    // demonstration of reduce method
+    int even 
+        = number.stream()
+        .filter(x -> x % 2 == 0)
+        .reduce(0, (ans, i) -> ans + i);
+
+    System.out.println(even);
+
+
+    // Stream with Functional Interface
+    Stream<Number> numberStream = Stream.of(1,2L);
+        Function<Number, Integer> fun = n -> Integer.valueOf(n.intValue());
+        Stream<Integer> numberStream1 = numberStream.map(fun);
+        // map accept `fun` signature as Integer is a subtype of Number, aka Integer extends Number
+        // as map will accept `Function<? super T, ? extends R>` where T is the stream type and R is the accepted return type
+        numberStream1.forEach(System.out::println);
+        // will print 1 and 2
+}
+```
+
+https://stackoverflow.com/questions/39432699/what-is-the-difference-between-streams-and-collections-in-java-8
+
+https://www.geeksforgeeks.org/difference-between-streams-and-collections-in-java/
+
+
+### Stream map | Function<? super T, ? extends R>:
 
 map accepts a function whose signature is `Function<? super T, ? extends R>` to allow functions accept `T (Stream's Type) or super type of T` and return `R or a subtype of R`
 ```java
@@ -269,6 +352,10 @@ numberStream1.forEach(System.out::println);
 https://www.baeldung.com/java-method-references
 
 ### Covariant/Output-type and Contravariant/Input-type  (`<? extends R>, <? super T>`):
-As-for-example Stream's map accept `Function<? super T, ? extends R>` functional type where T is a contravariant which is used for input-type and R is the return/output-type, which is a covariant.
+As-for-example Stream's map accept `Function<? super T, ? extends R>` functional type where T is a contravariant which is used for input-type and R is the return/output-type, which is a covariant. So in simple term `<? extends T>` is covariant and `<? super R>` is contravariant. 
+
+Another example is `forEach(Consumer<? super E> action)`, here the foreach accepts an argument of Consumer interface type, which is a contravariant or `in` for kotlin.
 
 * invariant means, exact type (aka, neither covariant nor contravariant)
+
+* In terms of kotlin, `consumer-in/super` and `producer-out/extends`.
