@@ -266,6 +266,96 @@ public class EmployeeController {
 */
 ```
 
+### Hateoas Collection Model:
+CollectionModel<> is another Spring HATEOAS container; it’s aimed at encapsulating collections of resources—instead of a single resource entity.
+```java
+@GetMapping("/employees")
+// will return something like List<Employee> bust will all the self and other resources link
+CollectionModel<EntityModel<Employee>> all() {
+    List<EntityModel<Employee>> employees = repository.findAll().stream()
+            .map( employee -> EntityModel.of (
+                    employee,
+                    linkTo( methodOn(EmployeeController.class).one(employee.getId()) ).withSelfRel(),
+                    linkTo( methodOn(EmployeeController.class).all() ).withRel("employees") 
+                    ) 
+            )
+            .collect(Collectors.toList());
+    return CollectionModel.of (
+            employees, linkTo( methodOn(EmployeeController.class).all() ).withSelfRel()
+    );
+}
+```
+
+Lets observe the difference between output form `List<Employees>` vs `CollectionModel<EntityModel<Employee>>`
+
+```json
+/* Output of the CollectionModel
+
+{
+   "_embedded" : {
+      "employeeList" : [
+         {
+            "_links" : {
+               "employees" : {
+                  "href" : "http://localhost:8080/employees"
+               },
+               "self" : {
+                  "href" : "http://localhost:8080/employees/1"
+               }
+            },
+            "id" : 1,
+            "name" : "Bilbo Baggins",
+            "role" : "burglar"
+         },
+         {
+            "_links" : {
+               "employees" : {
+                  "href" : "http://localhost:8080/employees"
+               },
+               "self" : {
+                  "href" : "http://localhost:8080/employees/2"
+               }
+            },
+            "id" : 2,
+            "name" : "Frodo Baggins",
+            "role" : "thief"
+         }
+      ]
+   },
+
+   "_links" : {
+      "self" : {
+         "href" : "http://localhost:8080/employees"
+      }
+   }
+}
+
+     */
+
+//    @GetMapping("/employees")
+//    List<Employee> all() {
+//        return repository.findAll();
+//    }
+
+    /* Output of List<Employees>
+    
+[
+   {
+      "id" : 1,
+      "name" : "Bilbo Baggins",
+      "role" : "burglar"
+   },
+   {
+      "id" : 2,
+      "name" : "Frodo Baggins",
+      "role" : "thief"
+   }
+]
+
+
+     */
+```
+
 ### `Hateoas`, `WebMvcLinkBuilder` and `RepresentationModelAssembler`:
 WebMvcLinkBuilder is for working with SpringMVC. It contains `linkTo`, `methodOn` helper static methods.
 

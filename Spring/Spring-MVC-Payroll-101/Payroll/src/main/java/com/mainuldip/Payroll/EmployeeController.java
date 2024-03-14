@@ -7,6 +7,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -23,14 +24,23 @@ public class EmployeeController {
     // tag::get-aggregate-root[]
     @GetMapping("/employees")
     CollectionModel<EntityModel<Employee>> all() {
-        List<EntityModel<Employee>> employee = repository.findAll().stream().map(
-                employee1 -> EntityModel.of()
+        List<EntityModel<Employee>> employees = repository.findAll().stream()
+                .map( employee -> EntityModel.of (
+                        employee,
+                        linkTo( methodOn(EmployeeController.class).one(employee.getId()) ).withSelfRel(),
+                        linkTo( methodOn(EmployeeController.class).all() ).withRel("employees")
+                        )
+                )
+                .collect(Collectors.toList());
+        return CollectionModel.of (
+                employees, linkTo( methodOn(EmployeeController.class).all() ).withSelfRel()
         );
-        return null;
-//        return repository.findAll();
     }
+
     // end::get-aggregate-root[]
     // curl -v localhost:8080/employees | json_pp
+
+    
 
     // add a new employee
     @PostMapping("/employees")
