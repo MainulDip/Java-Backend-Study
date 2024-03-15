@@ -359,7 +359,57 @@ Lets observe the difference between output form `List<Employees>` vs `Collection
 ### `Hateoas`, `WebMvcLinkBuilder` and `RepresentationModelAssembler`:
 WebMvcLinkBuilder is for working with SpringMVC. It contains `linkTo`, `methodOn` helper static methods.
 
-`RepresentationModelAssembler<T,EntityModel<T>>` interface is to convert  
+`RepresentationModelAssembler<T,EntityModel<T>>` interface is to convert  a POJO into Hateoas's data type, with will include all the hyper links.
+
+```java
+// adding spring's @Component annotation, so-that the assembler will be automatically created when the app starts.
+@Component
+class EmployeeModelAssembler implements RepresentationModelAssembler<Employee, EntityModel<Employee>> {
+
+    // toModel is the method of RepresentationalModelAssembler that is marked `abstract`, which must be implemented
+    @Override
+    public EntityModel<Employee> toModel(Employee employee) {
+        return EntityModel.of(employee,
+                linkTo(methodOn(EmployeeController.class).one(employee.getId())).withSelfRel(),
+                linkTo(methodOn(EmployeeController.class).all()).withRel("employees")
+                );
+    }
+}
+
+// inject EmployeeModelAssembler in the controller's constructor, and use it from the class prop
+@RestController
+public class EmployeeController {
+    private final EmployeeRepository repository;
+    private final EmployeeModelAssembler assembler;
+
+    public EmployeeController(EmployeeRepository repository, EmployeeModelAssembler assembler) {
+        this.repository = repository;
+        this.assembler = assembler; // injecting EmployeeModelAssembler
+    }
+
+    // Aggregate root
+    @GetMapping("/employees")
+    CollectionModel<EntityModel<Employee>> all() {
+        List<EntityModel<Employee>> employees = repository.findAll().stream()
+                .map(assembler::toModel)
+                .collect(Collectors.toList());
+        return CollectionModel.of (
+                employees, linkTo( methodOn(EmployeeController.class).all() ).withSelfRel()
+        );
+    }
+    // curl -v localhost:8080/employees | json_pp
+
+    @GetMapping("/employees/{id}")
+    EntityModel<Employee> one(@PathVariable @NonNull Long id) {
+        Employee employee = repository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+        return assembler.toModel(employee);
+    }
+    // curl -v localhost:8080/employees/99
+
+    // Other code
+}
+
+```
 
 ### JPA vs JDBC
 Spring JDBC allows to write SQL queries explicitly, giving the complete control over the database interactions. But adds a lot of boilerplate code. JDBC is database-dependent, which means that different scripts must be written for different databases

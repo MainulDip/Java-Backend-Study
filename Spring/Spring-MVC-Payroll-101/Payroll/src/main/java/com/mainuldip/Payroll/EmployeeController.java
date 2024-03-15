@@ -2,8 +2,10 @@ package com.mainuldip.Payroll;
 
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,9 +17,11 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 public class EmployeeController {
     private final EmployeeRepository repository;
+    private final EmployeeModelAssembler assembler;
 
-    public EmployeeController(EmployeeRepository repository) {
+    public EmployeeController(EmployeeRepository repository, EmployeeModelAssembler assembler) {
         this.repository = repository;
+        this.assembler = assembler;
     }
 
     // Aggregate root
@@ -25,12 +29,7 @@ public class EmployeeController {
     @GetMapping("/employees")
     CollectionModel<EntityModel<Employee>> all() {
         List<EntityModel<Employee>> employees = repository.findAll().stream()
-                .map( employee -> EntityModel.of (
-                        employee,
-                        linkTo( methodOn(EmployeeController.class).one(employee.getId()) ).withSelfRel(),
-                        linkTo( methodOn(EmployeeController.class).all() ).withRel("employees")
-                        )
-                )
+                .map(assembler::toModel)
                 .collect(Collectors.toList());
         return CollectionModel.of (
                 employees, linkTo( methodOn(EmployeeController.class).all() ).withSelfRel()
@@ -56,10 +55,13 @@ public class EmployeeController {
     @GetMapping("/employees/{id}")
     EntityModel<Employee> one(@PathVariable @NonNull Long id) {
         Employee employee = repository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
-        return EntityModel.of(employee,
-                linkTo(methodOn(EmployeeController.class).one(id)).withSelfRel(),
-                linkTo(methodOn(EmployeeController.class).all()).withRel("employees")
-        );
+//        return EntityModel.of(employee,
+//                linkTo(methodOn(EmployeeController.class).one(id)).withSelfRel(),
+//                linkTo(methodOn(EmployeeController.class).all()).withRel("employees")
+//        );
+
+
+        return assembler.toModel(employee);
     }
     // curl -v localhost:8080/employees/99
 
@@ -99,5 +101,19 @@ class EmployeeNotFoundAdvice {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     String employeeNotFoundHandler(EmployeeNotFoundException ex) {
         return ex.getMessage() + " Done!! \n\n\n";
+    }
+}
+
+// adding spring's @Component annotation, so-that the assembler will be automatically created when the app starts.
+@Component
+class EmployeeModelAssembler implements RepresentationModelAssembler<Employee, EntityModel<Employee>> {
+
+    // toModel is the method of RepresentationalModelAssembler that is marked `abstract`, which must be implemented
+    @Override
+    public EntityModel<Employee> toModel(Employee employee) {
+        return EntityModel.of(employee,
+                linkTo(methodOn(EmployeeController.class).one(employee.getId())).withSelfRel(),
+                linkTo(methodOn(EmployeeController.class).all()).withRel("employees")
+                );
     }
 }
