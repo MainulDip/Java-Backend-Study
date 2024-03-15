@@ -2,8 +2,10 @@ package com.mainuldip.Payroll;
 
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
@@ -39,16 +41,16 @@ public class EmployeeController {
     // end::get-aggregate-root[]
     // curl -v localhost:8080/employees | json_pp
 
-    
 
     // add a new employee
     @PostMapping("/employees")
-    boolean newEmployee(@RequestBody Employee newEmployee) {
-        if (newEmployee != null) {
-            repository.save(newEmployee);
-            return true;
-        }
-        return false;
+    ResponseEntity<?> newEmployee(@RequestBody Employee newEmployee) {
+
+        EntityModel<Employee> entityModel = assembler.toModel(repository.save(newEmployee));
+
+        return ResponseEntity
+                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
+                .body(entityModel);
     }
     // curl -X POST localhost:8080/employees -H 'Content-type:application/json' -d '{"name": "Samwise Gamgee", "role": "gardener"}'
 

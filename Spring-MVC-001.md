@@ -411,6 +411,19 @@ public class EmployeeController {
 
 ```
 
+### ResponseEntity<?>:
+```java
+@PostMapping("/employees")
+ResponseEntity<?> newEmployee(@RequestBody Employee newEmployee) {
+
+      EntityModel<Employee> entityModel = assembler.toModel(repository.save(newEmployee));
+
+      return ResponseEntity
+        .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
+        .body(entityModel);
+}
+```
+
 ### JPA vs JDBC
 Spring JDBC allows to write SQL queries explicitly, giving the complete control over the database interactions. But adds a lot of boilerplate code. JDBC is database-dependent, which means that different scripts must be written for different databases
 
