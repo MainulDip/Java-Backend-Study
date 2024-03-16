@@ -358,4 +358,4 @@ Another example is `forEach(Consumer<? super E> action)`, here the foreach accep
 
 * invariant means, exact type (aka, neither covariant nor contravariant)
 
-* In terms of kotlin, it is `consumer-in/super` and `producer-out/extends`
+* In terms of kotlin, it is `consumer-in/super` and `producer-out/extends`.

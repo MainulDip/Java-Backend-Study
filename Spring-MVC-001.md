@@ -412,16 +412,20 @@ public class EmployeeController {
 ```
 
 ### ResponseEntity<?>:
+Spring MVC’s ResponseEntity is used to create an HTTP 201 Created status message. This type of response typically includes a Location response header, here we're using the URI derived from the model’s self-related link.
+toUri method convert `link` from `entityModel.getRequiredLink(IanaLinkRelations.SELF)` into a URI
 ```java
+@PostMapping("/employees")
 @PostMapping("/employees")
 ResponseEntity<?> newEmployee(@RequestBody Employee newEmployee) {
 
-      EntityModel<Employee> entityModel = assembler.toModel(repository.save(newEmployee));
+    EntityModel<Employee> entityModel = assembler.toModel(repository.save(newEmployee));
 
-      return ResponseEntity
-        .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
-        .body(entityModel);
+    return ResponseEntity
+            .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) // this will include `Location: http://localhost:8080/employees/3` in HttpResponse
+            .body(entityModel);
 }
+// curl -v -X POST localhost:8080/employees -H 'Content-Type:application/json' -d '{"name": "Samwise Gamgee", "role": "gardener"}'
 ```
 
 ### JPA vs JDBC
@@ -435,3 +439,14 @@ Spring JPA provides `CrudRepository` for simple CRUD operations and provide buil
 
 ### Port Configs
 https://www.baeldung.com/spring-boot-change-port
+
+### Spring's Important Topics
+- Spring Security for authentication and authorization
+
+- Spring OAuth for social login with Facebook and Google
+
+- Spring Mail for sending customer registration confirmation and order confirmation
+
+- PayPal Checkout API for capturing payment from customer
+
+- Google Chart API for drawing charts of sales report
