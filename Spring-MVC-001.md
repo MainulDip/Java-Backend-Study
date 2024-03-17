@@ -440,7 +440,7 @@ Spring JPA provides `CrudRepository` for simple CRUD operations and provide buil
 ### Port Configs
 https://www.baeldung.com/spring-boot-change-port
 
-### Spring's Important Topics
+### Spring's Important Topics:
 - Spring Security for authentication and authorization
 
 - Spring OAuth for social login with Facebook and Google

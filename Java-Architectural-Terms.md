@@ -141,4 +141,4 @@ Inversion of Control (IoC) means that objects do not create other objects on whi
 
 Dependency Injection (DI) means that this is done without the object intervention, usually by a framework component that passes constructor parameters and set properties.
 
-https://stackoverflow.com/questions/6550700/inversion-of-control-vs-dependency-injection.
+https://stackoverflow.com/questions/6550700/inversion-of-control-vs-dependency-injection
