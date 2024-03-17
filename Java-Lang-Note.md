@@ -359,3 +359,9 @@ Another example is `forEach(Consumer<? super E> action)`, here the foreach accep
 * invariant means, exact type (aka, neither covariant nor contravariant)
 
 * In terms of kotlin, it is `consumer-in/super` and `producer-out/extends`.
+
+### Java `record` | Kotlin like Data class in Java:
+
+
+### LooBok vs `record`:
+https://www.baeldung.com/java-record-vs-lombok
