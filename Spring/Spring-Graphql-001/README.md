@@ -41,3 +41,35 @@ query bookDetails {
   }
 }
 ```
+
+
+### Define Data Types:
+
+
+### Define the controller to handle query:
+```java
+public class BookController {
+
+    /**
+     * this needs to be matched schema's query signature */
+    @QueryMapping
+    public Book bookById(@Argument String id) {
+        return Book.getById(id);
+    }
+
+    /**
+     * if a query ask for related author as its field, this needs to be matched with that */
+    @SchemaMapping
+    public Author author(Book book) {
+        return Author.getById(book.authorId());
+    }
+}
+```
+
+https://docs.spring.io/spring-graphql/reference/controllers.html
+
+### Multiple Graphql Endpoints:
+https://stackoverflow.com/questions/62202051
+
+### Graphql Configs:
+https://docs.spring.io/spring-boot/docs/current/reference/html/web.html#web.graphql
