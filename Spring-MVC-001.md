@@ -438,7 +438,7 @@ Spring JPA provides `CrudRepository` for simple CRUD operations and provide buil
 * JPA-based applications still use JDBC under the hood. JPA serves as a layer of abstraction that hides the low-level JDBC calls from the developer, making database programming considerably easier.
 
 ### Port Configs
-https://www.baeldung.com/spring-boot-change-port
+https://www.baeldung.com/spring-boot-change-port.
 
 ### Spring's Important Topics:
 - Spring Security for authentication and authorization
