@@ -1,0 +1,14 @@
+services:
+  mysql-sakila:
+    image: restsql/mysql-sakila:0.8.13
+    ports:
+      - "3306:3306"
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+# sudo docker-compose -f Docker-Compose-Sakila-Mysql.yaml up -d
+# sudo docker-compose -f Docker-Compose-Sakila-Mysql.yaml down
+# Adminer Connect => System: MySQL, Server: mysql-sakila, Username: root, Password: sakila
