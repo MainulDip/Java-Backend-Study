@@ -490,4 +490,4 @@ public class ColorValueObject {
 }
 ```
 
-https://www.baeldung.com/java-record-vs-lombok
+https://www.baeldung.com/java-record-vs-lombok.

@@ -1,7 +1,7 @@
 ### Overviews:
 Let's work with free version of Intellij IDEA (community edition). As Idea community has no support for Spring or the STS (Spring Tool Suite), vs-code can be used to utilize the missing part.
 
-### IntelliJ IDEA
+### IntelliJ IDEA :
 Generate class methods based on declared properties.
 
 ### VSCode:

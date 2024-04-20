@@ -130,7 +130,7 @@ CommandLineRunner initDatabase(EmployeeRepository repository) {
 }
 ```
 
-https://stackoverflow.com/questions/17193365/what-in-the-world-are-spring-beans
+https://stackoverflow.com/questions/17193365/what-in-the-world-are-spring-beans.
 
 ### Inversion-of-Control (IoC) and Dependency Injection (DI):
 The Dependency-Injection (DI) pattern is a more specific version of IoC pattern.
