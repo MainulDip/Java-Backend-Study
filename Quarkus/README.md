@@ -12,3 +12,6 @@ List<Film> films = jpaStreamer.stream(Film.class)
 
 
 ### Installation:
+
+### JPAStreamer MetaModel:
+We need some info (Meta info) to translate Stream pipeline into SQL quires.

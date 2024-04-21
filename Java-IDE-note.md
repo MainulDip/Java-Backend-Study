@@ -3,6 +3,8 @@ Let's work with free version of Intellij IDEA (community edition). As Idea commu
 
 ### IntelliJ IDEA :
 Generate class methods based on declared properties.
+=> JPA Buddy 
+=> JPA Support
 
 ### VSCode:
 To work in vs-code for spring boot development, we need
@@ -19,3 +21,7 @@ Docs => https://code.visualstudio.com/docs/java/java-spring-boot
 
 
 ### Spring ResponseEntity<?>:
+
+
+### Eclipse:
+=> AutoComplete => add `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.` at preference -> java -> auto complete suggestion

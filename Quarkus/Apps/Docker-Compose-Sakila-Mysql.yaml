@@ -1,6 +1,7 @@
 services:
   mysql-sakila:
     image: restsql/mysql-sakila:0.8.13
+    restart: always
     ports:
       - "3306:3306"
 
