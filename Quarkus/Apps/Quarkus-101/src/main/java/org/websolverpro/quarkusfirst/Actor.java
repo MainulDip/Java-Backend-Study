@@ -20,7 +20,7 @@ public class Actor implements Serializable {
 
 	@Id
 	@Column(name="actor_id")
-	private int actorId;
+	private Short actorId;
 
 	@Column(name="first_name")
 	private String firstName;
@@ -45,11 +45,11 @@ public class Actor implements Serializable {
 	public Actor() {
 	}
 
-	public int getActorId() {
+	public Short getActorId() {
 		return this.actorId;
 	}
 
-	public void setActorId(int actorId) {
+	public void setActorId(Short actorId) {
 		this.actorId = actorId;
 	}
 

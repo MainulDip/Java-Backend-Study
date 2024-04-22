@@ -44,7 +44,7 @@ Dependency Injection (DI) means that this is done without the object interventio
 
 https://stackoverflow.com/questions/6550700/inversion-of-control-vs-dependency-injection
 
-### Spring Boot Architecture Brif and @SpringBootApplication
+### Spring Boot Architecture Brif and @SpringBootApplication:
 Spring boot use a lot of annotation and Dependency Injection behind the scene.
 
 `@SpringBootApplication` (Define app's starting point) a meta-annotation that pulls in `component scanning`, `autoconfiguration`, and `property support`. it will fire up a servlet container and serve up our REST service.

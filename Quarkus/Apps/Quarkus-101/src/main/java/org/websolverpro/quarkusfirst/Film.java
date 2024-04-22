@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.annotations.JdbcTypeCode;
+
 import java.sql.Timestamp;
+import java.sql.Types;
 
 
 /**
@@ -24,20 +27,23 @@ public class Film implements Serializable {
 
 	@Id
 	@Column(name="film_id")
-	private int filmId;
+	private Short filmId;
 
 	@Lob
+	@JdbcTypeCode(Types.LONGVARCHAR)
 	private String description;
 
 	@Column(name="language_id")
-	private int languageId;
+	private Short languageId;
 
 	@Column(name="last_update")
 	private Timestamp lastUpdate;
 
+	@JdbcTypeCode(Types.SMALLINT)
 	private int length;
 
 	@Column(name="original_language_id")
+	@JdbcTypeCode(Types.SMALLINT)
 	private int originalLanguageId;
 
 	@Column(name="rating", columnDefinition = "enum('G', 'PG', 'PG-13', 'R', 'NC-17')")
@@ -48,6 +54,7 @@ public class Film implements Serializable {
 	private Date releaseYear;
 
 	@Column(name="rental_duration")
+	@JdbcTypeCode(Types.SMALLINT)
 	private int rentalDuration;
 
 	@Column(name="rental_rate")
@@ -56,7 +63,7 @@ public class Film implements Serializable {
 	@Column(name="replacement_cost")
 	private BigDecimal replacementCost;
 
-	@Column(name="special_features", columnDefinition = "enum('Trailers','Commentaries','Deleted Scenes','Behind the Scenes')")
+	@Column(name="special_features", columnDefinition = "set('Trailers','Commentaries','Deleted Scenes','Behind the Scenes')")
 	private Object specialFeatures;
 
 	private String title;
@@ -83,7 +90,7 @@ public class Film implements Serializable {
 		return this.filmId;
 	}
 
-	public void setFilmId(int filmId) {
+	public void setFilmId(Short filmId) {
 		this.filmId = filmId;
 	}
 
@@ -99,7 +106,7 @@ public class Film implements Serializable {
 		return this.languageId;
 	}
 
-	public void setLanguageId(int languageId) {
+	public void setLanguageId(Short languageId) {
 		this.languageId = languageId;
 	}
 

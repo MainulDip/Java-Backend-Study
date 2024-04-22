@@ -24,4 +24,11 @@ Docs => https://code.visualstudio.com/docs/java/java-spring-boot
 
 
 ### Eclipse:
-=> AutoComplete => add `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.` at preference -> java -> auto complete suggestion
+- AutoComplete => add `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.` at preference -> java -> auto complete suggestion
+
+- Terminal => stop color `invert` form window -> preference -> terminal
+- Project Explorer => Hide `bloating` elements, follow https://stackoverflow.com/questions/60962386/why-is-eclipse-removing-the-navigator-view.
+- Database Connection =>
+    - first convert the project to a JPA project (from project `properties` => `project facets`)
+    - Use no library and when connecting, add database jdbc driver from the `external-resource` build jar files (will will be available upon build and need to be in pom.xml)
+- From project directory, right click and use `run -> maven install` to build the project and run `maven clean` + `maven install` if there is some build error, sometimes cleaning resolves building success  
