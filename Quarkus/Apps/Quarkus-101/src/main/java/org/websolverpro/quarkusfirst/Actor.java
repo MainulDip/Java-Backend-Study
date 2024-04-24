@@ -1,80 +1,81 @@
 package org.websolverpro.quarkusfirst;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
-
 import jakarta.persistence.*;
 
+import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
-/**
- * The persistent class for the actor database table.
- * 
- */
 @Entity
-@Table(name="actor", schema = "sakila")
-@NamedQuery(name="Actor.findAll", query="SELECT a FROM Actor a")
-public class Actor implements Serializable {
-	private static final long serialVersionUID = 1L;
+@Table(name = "actor", schema = "sakila")
+public class Actor {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(name = "actor_id")
+    private short actorId;
+    @Basic
+    @Column(name = "first_name")
+    private String firstName;
+    @Basic
+    @Column(name = "last_name")
+    private String lastName;
+    @Basic
+    @Column(name = "last_update")
+    private Timestamp lastUpdate;
+    @ManyToMany(mappedBy = "actors")
+    private Set<Film> films = new HashSet<>();
 
-	@Id
-	@Column(name="actor_id")
-	private Short actorId;
+    public short getActorId() {
+        return actorId;
+    }
 
-	@Column(name="first_name")
-	private String firstName;
+    public void setActorId(short actorId) {
+        this.actorId = actorId;
+    }
 
-	@Column(name="last_name")
-	private String lastName;
+    public String getFirstName() {
+        return firstName;
+    }
 
-	@Column(name="last_update")
-	private Timestamp lastUpdate;
-	
-	@ManyToMany(mappedBy = "actors")
-	private Set<Film> films = new HashSet<Film>();
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public Set<Film> getFilms() {
-		return films;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public void setFilms(Set<Film> films) {
-		this.films = films;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public Actor() {
-	}
+    public Timestamp getLastUpdate() {
+        return lastUpdate;
+    }
 
-	public Short getActorId() {
-		return this.actorId;
-	}
+    public void setLastUpdate(Timestamp lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
 
-	public void setActorId(Short actorId) {
-		this.actorId = actorId;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Actor actor = (Actor) o;
+        return actorId == actor.actorId && Objects.equals(firstName, actor.firstName) && Objects.equals(lastName, actor.lastName) && Objects.equals(lastUpdate, actor.lastUpdate);
+    }
 
-	public String getFirstName() {
-		return this.firstName;
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(actorId, firstName, lastName, lastUpdate);
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public Set<Film> getFilms() {
+        return films;
+    }
 
-	public String getLastName() {
-		return this.lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public Timestamp getLastUpdate() {
-		return this.lastUpdate;
-	}
-
-	public void setLastUpdate(Timestamp lastUpdate) {
-		this.lastUpdate = lastUpdate;
-	}
-
+    public void setFilms(Set<Film> films) {
+        this.films = films;
+    }
 }

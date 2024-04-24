@@ -8,6 +8,8 @@
     <properties>
         <compiler-plugin.version>3.11.0</compiler-plugin.version>
         <maven.compiler.release>17</maven.compiler.release>
+        <maven.compiler.source>17</maven.compiler.source>
+      	<maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
@@ -63,6 +65,7 @@
     </dependencies>
 
     <build>
+		<defaultGoal>buildQuarkus</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>${quarkus.platform.group-id}</groupId>
@@ -86,8 +89,39 @@
                     <compilerArgs>
                         <arg>-parameters</arg>
                     </compilerArgs>
+					<!--                   
+				 	<annotationProcessorPaths>
+				      <path>
+				        <groupId>com.speedment.jpastreamer</groupId>
+				        <artifactId>fieldgenerator-standard</artifactId>
+				        <version>3.0.2.Final</version>
+				      </path>
+				    </annotationProcessorPaths>
+				    -->
                 </configuration>
             </plugin>
+            
+            <!-- To Picks up the generated metamodel as an additional source directory -->
+            
+            <plugin> 
+		        <groupId>org.codehaus.mojo</groupId>
+		        <artifactId>build-helper-maven-plugin</artifactId>
+		        <version>3.2.0</version>
+		        <executions>
+		            <execution>
+		                <phase>generate-sources</phase>
+		                <goals>
+		                    <goal>add-source</goal>
+		                </goals>
+		                <configuration>
+		                    <sources>
+		                        <source>${project.build.directory}/generated-sources/annotations</source>
+		                    </sources>
+		                </configuration>
+		            </execution>
+		        </executions>
+		    </plugin>
+            
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>
