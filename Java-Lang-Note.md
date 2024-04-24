@@ -460,7 +460,7 @@ public class MonochromeColor extends ColorData {
 ```
 
 ### LomBok vs `record`:
-LomBok support data mutation by `@AllArgsConstructor` of a `@Data` class and immutability for `@Value` classes. But `records` are only for immutable data
+LomBok support data mutation by `@AllArgsConstructor` of a `@Data` class and immutability for `@Value` classes. But `records` are only for immutable data type
 
 Records are transparent carriers for immutable data, so hiding getters is not possible. But Lombok allows to restricts access levels of the properties getters by `@Getter(AccessLevel.NONE)`.
 

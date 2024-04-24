@@ -22,3 +22,5 @@ public class FilmRepository {
 	}
 	
 }
+
+// Now, try to place generated-source/annotation into the `src` directory by configuring `jpastreamer plugin`
