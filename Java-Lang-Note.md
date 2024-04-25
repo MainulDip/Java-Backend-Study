@@ -304,7 +304,7 @@ public static void main(String args[])
 
 https://stackoverflow.com/questions/39432699/what-is-the-difference-between-streams-and-collections-in-java-8
 
-https://www.geeksforgeeks.org/difference-between-streams-and-collections-in-java/
+https://www.geeksforgeeks.org/difference-between-streams-and-collections-in-java/.
 
 
 ### Stream map | Function<? super T, ? extends R>:

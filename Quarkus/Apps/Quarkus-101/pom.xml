@@ -106,19 +106,19 @@
             <plugin> 
 		        <groupId>org.codehaus.mojo</groupId>
 		        <artifactId>build-helper-maven-plugin</artifactId>
-		        <version>3.3.0</version>
+		        <version>3.5.0</version>
 		        <executions>
 		            <execution>
-                        <?m2e execute onConfiguration?>
-		                <!-- <phase>generate-sources</phase>
+                        <!-- <?m2e execute onConfiguration?> -->
+		                <phase>generate-sources</phase>
 		                <goals>
 		                    <goal>add-source</goal>
 		                </goals>
 		                <configuration>
 		                    <sources>
-		                        <source>${project.build.directory}/generated-sources/annotations</source>
+		                        <source>target/generated-sources/annotations/</source>
 		                    </sources>
-		                </configuration> -->
+		                </configuration>
 		            </execution>
 		        </executions>
 		    </plugin>

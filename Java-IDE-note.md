@@ -37,3 +37,28 @@ Docs => https://code.visualstudio.com/docs/java/java-spring-boot
 Most used theme in Eclipse is `Dev Style Dark Theme` and `Eclipse Color Theme`.
 DevStyle them provide full IDE customization which color theme lacking (only support editor theming, not workbench theming). And color theme has some good theming option.
 Its better to customize `Dev Style` theme based on downloaded `color theme`
+
+### Add Generated-Source as Source Root:
+VsCode and Eclipse don't see /target/generated-sources classes while referring form the `src/main`. IntelliJ usually pick those out-of-the box.
+To fix this, 
+=> on `VScode` => Java -> Configure Class Path -> Add the generated source as `source root`
+
+=> on Eclipse => add output as source directory and source root (finding the exact way)
+
+
+Example `.classPath` file entry
+
+```xml
+<classpathentry kind="src" path="target/generated-sources/annotations">
+    <attributes>
+            <attribute name="optional" value="true"/>
+            <attribute name="maven.pomderived" value="true"/>
+            <attribute name="ignore_optional_problems" value="true"/>
+            <attribute name="m2e-apt" value="true"/>
+    </attributes>
+</classpathentry>
+```
+
+* Current Workaround => Set `Source Root` from the VSCode and Use Proceed on Eclipse (As VSCode uses Eclipse Engine)
+
+###
