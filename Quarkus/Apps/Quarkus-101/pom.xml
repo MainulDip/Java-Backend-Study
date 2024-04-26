@@ -62,6 +62,13 @@
             <artifactId>quarkus-junit5</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!--   Rest Assured For Testing REST EndPoints   -->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -122,7 +129,8 @@
 		            </execution>
 		        </executions>
 		    </plugin>
-            
+
+            <!-- For supporting junit5 testing -->
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>

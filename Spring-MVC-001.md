@@ -63,7 +63,7 @@ public class PayrollApplication {
 ```
 
 ### Spring Data JPA (DAO) | Hibernate (ORM) :
-Using Spring Data JPA (Java Persistance API), `DAOs` (Data Access Objects) are created automatically behind the scene at compile time. It uses an ORM (like Hibernate) in these DAOs. 
+Using Spring Data JPA (Java Persistance API), `DAOs` (Data Access Objects) are created automatically behind the scene at compile time. It uses an ORM (like Hibernate) in these DAOs
 
 To create DAO, we need a `POJO` with @Entity annotation (and some inner annotations) and a repository that extends `JpaRepository<POJO, IDType>`.
 

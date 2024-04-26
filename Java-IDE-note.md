@@ -61,4 +61,9 @@ Example `.classPath` file entry
 
 * Current Workaround => Set `Source Root` from the VSCode and Use Proceed on Eclipse (As VSCode uses Eclipse Engine)
 
+* Another workaround to explore if nothing works - Experiment generated-source/annotation into the `src` directory by configuring `jpastreamer plugin`
+
+### Linux Port Managements:
+Check what process-id (PID) is running on a particular port by `fuser 8080/tcp`. Then kill that by `kill pid` or `fuser -k 8080/tcp`
+
 ###
