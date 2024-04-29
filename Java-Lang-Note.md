@@ -491,3 +491,7 @@ public class ColorValueObject {
 ```
 
 https://www.baeldung.com/java-record-vs-lombok.
+
+
+### CDI and EJB Bean | Contexts and Dependency Injection:
+EJB >= CDI bean
