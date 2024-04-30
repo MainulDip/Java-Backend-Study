@@ -494,4 +494,11 @@ https://www.baeldung.com/java-record-vs-lombok.
 
 
 ### CDI and EJB Bean | Contexts and Dependency Injection:
-EJB >= CDI bean
+EJB >= CDI bean (EJB beans are CDI + More things)
+
+### Named parameter | Method vs Annotation:
+Java doesn't has `named` parameter in method names.
+
+For annotation, there it is, `named parameter`. Only if there is a named `value` property and all other property has default values, parameter is not mandatory. Also, to assign values for the parameters with default value, all parameter should be `named parameter`.
+
+https://stackoverflow.com/questions/11786354/how-can-i-do-java-annotation-like-nameluke-with-no-attribute-inside-parenth

@@ -1,11 +1,14 @@
 package org.websolverpro.cache;
 
+import io.quarkus.cache.CacheResult;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.time.LocalDate;
 
 @ApplicationScoped
 public class WeatherForecastService {
+
+    @CacheResult(cacheName = "weather-cache")
     public String getDailyForecast(LocalDate date, String city) {
         try {
             Thread.sleep(2000L);

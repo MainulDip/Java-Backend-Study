@@ -64,6 +64,6 @@ Example `.classPath` file entry
 * Another workaround to explore if nothing works - Experiment generated-source/annotation into the `src` directory by configuring `jpastreamer plugin`
 
 ### Linux Port Managements:
-Check what process-id (PID) is running on a particular port by `fuser 8080/tcp`. Then kill that by `kill pid` or `fuser -k 8080/tcp`
+Check what process-id (PID) is running on a particular port by `fuser 8080/tcp`. Then kill that by `kill pid` or `fuser -k 8080/tcp`.
 
 ###

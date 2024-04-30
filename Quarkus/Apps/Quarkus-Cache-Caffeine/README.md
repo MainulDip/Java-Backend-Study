@@ -1,7 +1,7 @@
 # Quarkus-Cache-Caffeine
 
 Project is generated using Quarkus CLI with `quarkus create app org.websolverpro:Quarkus-Cache-Caffeine --extension='cache,rest-jackson' --no-code`
-
+And run `quarkus dev`
 ## Running the application in dev mode
 
 You can run your application in dev mode that enables live coding using:
