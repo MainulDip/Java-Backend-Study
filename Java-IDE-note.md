@@ -17,6 +17,7 @@ To work in vs-code for spring boot development, we need
 
 => New project can be created using STS extension of vs-code through `command palette` -> `Spring Initializer` to generate Maven or Gradle project. Modules/Dependencies can be added later down the road form pom.xml or build.gradle file. There will be an ide suggestion just right of the dependencies tag in the pom.xml saying `add spring boot starters ...`. Click there and add new dependencies.
 
+
 Docs => https://code.visualstudio.com/docs/java/java-spring-boot
 
 
@@ -43,7 +44,7 @@ VsCode and Eclipse don't see /target/generated-sources classes while referring f
 To fix this, 
 => on `VScode` => Java -> Configure Class Path -> Add the generated source as `source root`
 
-=> on Eclipse => add output as source directory and source root (finding the exact way)
+=> on Eclipse => add output as source directory and source root (finding the exact way).
 
 
 Example `.classPath` file entry

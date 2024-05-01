@@ -493,8 +493,58 @@ public class ColorValueObject {
 https://www.baeldung.com/java-record-vs-lombok.
 
 
-### CDI and EJB Bean | Contexts and Dependency Injection:
-EJB >= CDI bean (EJB beans are CDI + More things)
+### EJB | Enterprise Java Beans:
+EJB is an acronym for Enterprise Java Beans and usually holds the business logic of an application. It is a specification for developing a distributed business application on the Java platform. 
+
+Bean -> In java, beans are classes that 1. implements Serializable, 2. has only private properties and an empty constructor, 3. has getters and setters for building the object. 
+
+Frameworks like SpringBoot and Quarkus use annotations to mark different types of beans and inject instances through annotation processing.
+
+There are 3 types of Beans in EJB
+1. Session Bean
+    - Stateless (Classes those does not have properties)
+    - Stateful (Classes those have properties)
+    - Singleton (single shareable instance in the application)
+
+2. Entity Bean
+    - Bean-Managed Persistence (BMP) | include persistence logic (DB query) into the class
+    - Container-Managed Persistence (CMP) | persistence is handled by the application container at run-time
+
+3. Message Driven Bean (MDB) : these beans implements methods from the Java Messaging Service (JMS) to consume messages from a queue or subscription. IE, creating and opening a JMS connection to the database by using the data source (JMS resource provider). The JDBC driver is used to facilitate the JMS connection
+
+
+https://www.javatpoint.com/types-of-ejb
+EJB >= CDI bean (EJB beans are CDI + More things).
+
+* Note: Quarkus doesn't use EJB, It uses CDI (Context and Dependency Injection).
+
+### CDI Beans in Quarkus | Contexts and Dependency Injection | CDI annotations:
+There are `managed bean` by application container. Annotations are used to mark bean for dependency injection, lifecycle callbacks and interceptors. These CDI annotations can be for Classes, Fields/Properties and Methods (interceptor binding)
+
+`@ApplicationScoped` - Classes' scope annotation. It tells the app container, which context to associate the bean instance with. Same as `@Singleton` in Spring
+`@Inject` - For Injecting Dependency in Fields (@Autowired in Spring Boot)
+`@Counted` - Interceptor Binding in methods
+
+* Constructor and Setter injection
+
+```java
+@ApplicationScoped
+public class Translator {
+
+    private final TranslatorHelper helper;
+
+    /* It’s also not necessary to add @Inject if there is only one constructor */
+    /* Quarkus will detect the absence of no-args constructor and add it in the bytecode */
+    Translator(TranslatorHelper helper) { 
+       this.helper = helper;
+    }
+
+    @Inject /* setter method must be annotated with @Inject */
+    void setDeps(Dictionary dic, LocalizationService locService) { /* props will be injected */
+      / ...
+    }
+}
+```
 
 ### Named parameter | Method vs Annotation:
 Java doesn't has `named` parameter in method names.
@@ -502,3 +552,5 @@ Java doesn't has `named` parameter in method names.
 For annotation, there it is, `named parameter`. Only if there is a named `value` property and all other property has default values, parameter is not mandatory. Also, to assign values for the parameters with default value, all parameter should be `named parameter`.
 
 https://stackoverflow.com/questions/11786354/how-can-i-do-java-annotation-like-nameluke-with-no-attribute-inside-parenth
+
+* Annotations => https://belief-driven-design.com/java-annotations-explained-4f54e6e6c3f/

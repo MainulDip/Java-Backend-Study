@@ -11,4 +11,4 @@ List<Film> films = jpaStreamer.stream(Film.class)
 ```
 
 
-### Installation:
+### Installation Using CLI and Web:

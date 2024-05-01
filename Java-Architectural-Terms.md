@@ -39,7 +39,7 @@ public class FormServlet extends HttpServlet {
 Guide: https://www.baeldung.com/intro-to-servlets
 
 ### Web Server vs Application Server:
-application servers have full support for the Java EE spec, whereas web servers (a.k.a Servlet Container) support a small subset of that functionality
+application servers have full support for the Java EE spec, whereas web servers (a.k.a Servlet Container) support a small subset of that functionality.
 
 <img src="./images/java-web-server-vs-application-server.jpg"/>
 
