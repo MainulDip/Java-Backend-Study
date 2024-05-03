@@ -1,13 +1,13 @@
 services:
   mysql-sakila:
     image: restsql/mysql-sakila:0.8.13
-    restart: always
+    # restart: always
     ports:
       - "3306:3306"
 
   adminer:
     image: adminer
-    restart: always
+    # restart: always
     ports:
       - 7070:8080
 # sudo docker-compose -f Docker-Compose-Sakila-Mysql.yaml up -d
