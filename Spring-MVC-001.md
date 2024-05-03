@@ -107,7 +107,8 @@ spring.datasource.password=root
 server.port=7000
 ```
 
-### REST Controller Sample (RPC):
+### REST Controller Sample (RPC | Remote Procedural Call):
+* RPC is not fully qualified RESTful, as there are no internal linking
 ```java
 package com.mainuldip.payroll;
 import org.springframework.http.HttpStatus;

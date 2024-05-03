@@ -11,7 +11,7 @@ To work in vs-code for spring boot development, we need
 => Spring Boot Extension Pack (contains below extensions and some other helper extensions)
     - Spring initializer
     - Spring Boot Tools
-    - Spring Boot Dashboard
+    - Spring Boot Dashboard.
 => Java Development Kit (JDK)
 => Extension Pack for Java
 
